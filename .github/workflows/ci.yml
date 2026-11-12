@@ -38,3 +38,10 @@ jobs:
           docker run -d --name hw -p 8000:8000 -e HW_MODE=demo -e HW_DEMO_BACKFILL=5 hivewatch:ci
           for i in $(seq 1 30); do curl -sf localhost:8000/healthz && break; sleep 1; done
           curl -sf localhost:8000/api/stats | python -c "import sys,json; d=json.load(sys.stdin); assert d['kpis']['events']>0; print('events:', d['kpis']['events'])"
+
+  shellcheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: ShellCheck deploy scripts
+        run: shellcheck deploy/*.sh

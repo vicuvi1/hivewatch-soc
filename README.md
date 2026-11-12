@@ -113,18 +113,20 @@ docker build -t hivewatch . && docker run --rm -p 127.0.0.1:8000:8000 -e HW_MODE
 
 > ⚠️ Run honeypots only on infrastructure you own, ideally a cheap, isolated VPS with nothing else on it.
 
-1. Move your real SSH daemon off port 22 (e.g. `Port 22222` in `/etc/ssh/sshd_config`, then restart sshd and **test it before logging out**).
-2. Configure and launch:
-   ```bash
-   cp .env.example .env      # set HW_MODE=live, a long HW_DASH_TOKEN, your coordinates
-   docker compose up -d
-   ```
-3. Open the dashboard through an SSH tunnel (it is never exposed publicly):
-   ```bash
-   ssh -L 8000:localhost:8000 -p 22222 you@your-vps
-   ```
-   Then browse to `http://localhost:8000/?token=YOUR_TOKEN`.
-4. (Optional) Add `ABUSEIPDB_API_KEY` and `TELEGRAM_BOT_TOKEN` / `TELEGRAM_CHAT_ID` to get reputation scores and phone alerts.
+One command on a fresh Ubuntu server:
+
+```bash
+curl -fsSLO https://raw.githubusercontent.com/vicuvi1/hivewatch-soc/main/deploy/install.sh
+sudo bash install.sh
+```
+
+The installer moves your real SSH to port 22222, but only **after you confirm** you can log in there. It then puts the honeypot on port 22, generates a dashboard token, and starts everything in a hardened container. Open the dashboard through an SSH tunnel; it is never exposed publicly:
+
+```bash
+ssh -N -L 8000:localhost:8000 -p 22222 you@your-vps   # then open http://localhost:8000/?token=...
+```
+
+📖 Full guide (cloud firewalls, Telegram alerts, troubleshooting): **[docs/DEPLOY.md](docs/DEPLOY.md)**
 
 On a public IPv4 address, expect the first SSH brute-force attempts within minutes.
 

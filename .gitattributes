@@ -1,0 +1,6 @@
+# Shell scripts and container files run on Linux: always LF, even when committed from Windows
+* text=auto
+*.sh text eol=lf
+Dockerfile text eol=lf
+*.yml text eol=lf
+*.png binary
