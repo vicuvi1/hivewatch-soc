@@ -11,7 +11,7 @@ It deploys SSH, Telnet, HTTP and TCP honeypots, enriches every attacker with thr
 ![Docker](https://img.shields.io/badge/docker-hardened-2496ED?logo=docker&logoColor=white)
 ![License](https://img.shields.io/badge/license-MIT-green)
 
-![HiveWatch dashboard](docs/dashboard.png)
+![HiveWatch demo: live attack map, detections, ATT&CK heatmap and a threat-actor profile replaying a shell session (demo mode)](docs/demo.gif)
 
 </div>
 
